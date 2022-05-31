@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.Events;
 
 namespace Unity.FPS.Game
@@ -22,6 +24,8 @@ namespace Unity.FPS.Game
         public bool IsCritical() => GetRatio() <= CriticalHealthRatio;
 
         bool m_IsDead;
+        public scoremanager muertepuntuacion;
+      
 
         void Start()
         {
@@ -64,23 +68,36 @@ namespace Unity.FPS.Game
         public void Kill()
         {
             CurrentHealth = 0f;
-
+            
+            
+            
             // call OnDamage action
             OnDamaged?.Invoke(MaxHealth, null);
+            
 
             HandleDeath();
+            //muertepuntuacion.puntuacion++;
+            
         }
 
         void HandleDeath()
         {
             if (m_IsDead)
+                
                 return;
+                
+                
 
             // call OnDie action
             if (CurrentHealth <= 0f)
             {
+                
                 m_IsDead = true;
                 OnDie?.Invoke();
+                Debug.Log("ha muerto el enemigo");
+                muertepuntuacion.puntuacion ++;
+                Debug.Log("Le sumo al score");
+         
             }
         }
     }
